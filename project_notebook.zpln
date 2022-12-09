@@ -1,0 +1,572 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": " // Sanity check to verify that Spark wants to run.\n spark.version",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T16:05:36+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mres20\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = 3.1.1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1654872634116_2137373077",
+      "id": "paragraph_1654872634116_2137373077",
+      "dateCreated": "2022-06-10T14:50:34+0000",
+      "dateStarted": "2022-06-23T16:05:36+0000",
+      "dateFinished": "2022-06-23T16:05:36+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:429"
+    },
+    {
+      "text": "// Class definitions we need in the remainder:\nimport org.apache.hadoop.io.NullWritable\nimport de.l3s.concatgz.io.warc.{WarcGzInputFormat,WarcWritable}\nimport de.l3s.concatgz.data.WarcRecord\n\n// Overrule default settings\nimport org.apache.spark.SparkConf\nimport org.apache.spark.sql.SparkSession\n\nval sparkConf = new SparkConf()\n                      .setAppName(\"RUBigData WARC4Spark 2021\")\n                      .set(\"spark.serializer\", \"org.apache.spark.serializer.KryoSerializer\")\n                      .registerKryoClasses(Array(classOf[WarcRecord]))\n//                      .set(\"spark.dynamicAllocation.enabled\", \"true\")\nimplicit val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()\nval sc = sparkSession.sparkContext",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T16:09:26+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.hadoop.io.NullWritable\nimport de.l3s.concatgz.io.warc.{WarcGzInputFormat, WarcWritable}\nimport de.l3s.concatgz.data.WarcRecord\nimport org.apache.spark.SparkConf\nimport org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34msparkConf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.SparkConf\u001b[0m = org.apache.spark.SparkConf@7ef44c60\n\u001b[1m\u001b[34msparkSession\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@446a2dcc\n\u001b[1m\u001b[34msc\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.SparkContext\u001b[0m = org.apache.spark.SparkContext@350da5bf\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1654872659254_531839819",
+      "id": "paragraph_1654872659254_531839819",
+      "dateCreated": "2022-06-10T14:50:59+0000",
+      "dateStarted": "2022-06-23T16:09:26+0000",
+      "dateFinished": "2022-06-23T16:09:26+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:430"
+    },
+    {
+      "text": "%sh\n[ ! -f wiki.warc.gz ] && wget -r -l 3 \"https://en.wikipedia.org/wiki/Good\" --delete-after --no-directories --warc-file=\"course\" || echo Most likely, wiki.warc.gz already exists\n\nval fname = z.textbox(\"Filename:\")\nval warcfile = s\"file:///opt/hadoop/rubigdata/${fname}.warc.gz\"",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T17:39:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "fname": "course"
+        },
+        "forms": {
+          "fname": {
+            "type": "TextBox",
+            "name": "fname",
+            "displayName": "fname",
+            "hidden": false,
+            "$$hashKey": "object:656"
+          }
+        }
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Opening WARC file ‘course.warc.gz’.\n\n--2022-06-23 17:39:00--  https://en.wikipedia.org/wiki/Good\nResolving en.wikipedia.org (en.wikipedia.org)... 91.198.174.192, 91.198.174.192, 2620:0:862:ed1a::1, ...\nConnecting to en.wikipedia.org (en.wikipedia.org)|91.198.174.192|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 124368 (121K) [text/html]\nSaving to: ‘Good.tmp’\n\n     0K .......... .......... .......... .......... .......... 41% 2.42M 0s\n    50K .......... .......... .......... .......... .......... 82% 15.6M 0s\n   100K .......... .......... .                               100%  115M=0.02s\n\n2022-06-23 17:39:01 (5.05 MB/s) - ‘Good.tmp’ saved [124368/124368]\n\nLoading robots.txt; please ignore errors.\n--2022-06-23 17:39:01--  https://en.wikipedia.org/robots.txt\nReusing existing connection to en.wikipedia.org:443.\nHTTP request sent, awaiting response... 200 OK\nLength: 27525 (27K) [text/plain]\nSaving to: ‘robots.txt.tmp’\n\n     0K .......... .......... ......                          100%  139M=0s\n\n2022-06-23 17:39:01 (139 MB/s) - ‘robots.txt.tmp’ saved [27525/27525]\n\nRemoving robots.txt.tmp.\nRemoving Good.tmp.\n\nFINISHED --2022-06-23 17:39:01--\nTotal wall clock time: 0.2s\nDownloaded: 2 files, 148K in 0.02s (6.12 MB/s)\nbash: -c: line 2: syntax error near unexpected token `('\nbash: -c: line 2: `val fname = z.textbox(\"Filename:\")'\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "ExitValue: 1"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1656003387805_654124933",
+      "id": "paragraph_1656003387805_654124933",
+      "dateCreated": "2022-06-23T16:56:27+0000",
+      "dateStarted": "2022-06-23T17:39:00+0000",
+      "dateFinished": "2022-06-23T17:39:01+0000",
+      "status": "ERROR",
+      "$$hashKey": "object:431"
+    },
+    {
+      "text": "val warcfile = s\"file:///opt/hadoop/rubigdata/CC-MAIN-20210417102129-20210417132129-00338.warc.gz\"",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T16:09:29+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mwarcfile\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = file:///opt/hadoop/rubigdata/CC-MAIN-20210417102129-20210417132129-00338.warc.gz\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1656000102339_1364431004",
+      "id": "paragraph_1656000102339_1364431004",
+      "dateCreated": "2022-06-23T16:01:42+0000",
+      "dateStarted": "2022-06-23T16:09:29+0000",
+      "dateFinished": "2022-06-23T16:09:29+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:432"
+    },
+    {
+      "text": "val warcs = sc.newAPIHadoopFile(\n              warcfile,\n              classOf[WarcGzInputFormat],             // InputFormat\n              classOf[NullWritable],                  // Key\n              classOf[WarcWritable]                   // Value\n    ).cache()",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T17:39:03+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mwarcs\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(org.apache.hadoop.io.NullWritable, de.l3s.concatgz.io.warc.WarcWritable)]\u001b[0m = file:///opt/hadoop/rubigdata/course.warc.gz NewHadoopRDD[184] at newAPIHadoopFile at <console>:123\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1654872686627_704494700",
+      "id": "paragraph_1654872686627_704494700",
+      "dateCreated": "2022-06-10T14:51:26+0000",
+      "dateStarted": "2022-06-23T17:39:03+0000",
+      "dateFinished": "2022-06-23T17:39:03+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:433"
+    },
+    {
+      "text": "//Sanity Check\nval nHTML = warcs.count()\nprintln(nHTML)",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T17:39:05+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "8\n\u001b[1m\u001b[34mnHTML\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m = 8\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=35",
+              "$$hashKey": "object:985"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1654872724369_1016595703",
+      "id": "paragraph_1654872724369_1016595703",
+      "dateCreated": "2022-06-10T14:52:04+0000",
+      "dateStarted": "2022-06-23T17:39:05+0000",
+      "dateFinished": "2022-06-23T17:39:05+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:434"
+    },
+    {
+      "text": "import org.jsoup.Jsoup\nimport org.jsoup.nodes.{Document,Element}\nimport collection.JavaConverters._\n\nval warc_records = warcs.map{ wr => wr._2 }\n                        .filter{_.isValid()}\n                        .map{_.getRecord()}",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T17:39:08+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.jsoup.Jsoup\nimport org.jsoup.nodes.{Document, Element}\nimport collection.JavaConverters._\n\u001b[1m\u001b[34mwarc_records\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[de.l3s.concatgz.data.WarcRecord]\u001b[0m = MapPartitionsRDD[187] at map at <console>:128\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1656000202487_1338082105",
+      "id": "paragraph_1656000202487_1338082105",
+      "dateCreated": "2022-06-23T16:03:22+0000",
+      "dateStarted": "2022-06-23T17:39:08+0000",
+      "dateFinished": "2022-06-23T17:39:08+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:435"
+    },
+    {
+      "text": "val warc_text = warc_records\n            .map(wr => wr.getHttpStringBody() )\n            .map(wr => Jsoup.parse(wr))\n            .filter(wr => wr.select(\"html\").first().attr(\"lang\") == \"en\")\n            .map(_.body().text())\n            .filter(_.length > 0)\n            \nval warc_words = warc_text\n            .flatMap(_.split(\" \"))\n            .map(_.replaceAll(\n                \"[^a-zA-Z]\", \"\")\n                .toLowerCase\n            )\n            \nval wordcounts = warc_words\n            .filter(w => w == \"good\" || w == \"bad\" || w == \"evil\")\n            // .filter(w => w == \"love\" || w == \"hate\")\n            .map(word => (word, 1))\n            .reduceByKey(_+_)\n            .sortByKey()\n\n\nwordcounts.take(150).foreach(println)\nwarc_words.count()",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-23T17:40:46+0000",
+      "progress": 33,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "(bad,3)\n(evil,33)\n(good,54)\n\u001b[1m\u001b[34mwarc_text\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[203] at filter at <console>:136\n\u001b[1m\u001b[34mwarc_words\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[205] at map at <console>:140\n\u001b[1m\u001b[34mwordcounts\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(String, Int)]\u001b[0m = ShuffledRDD[209] at sortByKey at <console>:150\n\u001b[1m\u001b[34mres45\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m = 2813\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=37",
+              "$$hashKey": "object:1071"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=38",
+              "$$hashKey": "object:1072"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1654872613644_1820091051",
+      "id": "paragraph_1654872613644_1820091051",
+      "dateCreated": "2022-06-10T14:50:13+0000",
+      "dateStarted": "2022-06-23T17:40:46+0000",
+      "dateFinished": "2022-06-23T17:40:46+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:436"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.types._\n\nval schema = new StructType()\n      .add(\"ant1\",StringType,true)\n      .add(\"ant2\",StringType,true)\n\nval antpairs = spark.read\n        .format(\"csv\")\n        .option(\"header\", false)\n        .option(\"multiLine\", true)\n        .schema(schema)\n        .load(\"file:////opt/hadoop/rubigdata/antonym_data.csv\").cache()\n        \nantpairs.createOrReplaceTempView(\"antDATA\")\n\nantpairs.printSchema()\nantpairs.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-26T12:56:11+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- ant1: string (nullable = true)\n |-- ant2: string (nullable = true)\n\n+-------------+-----------+\n|         ant1|       ant2|\n+-------------+-----------+\n|infinitesimal|   infinity|\n|     grandson|grandfather|\n|   angiosperm| gymnosperm|\n|   illiteracy|   literacy|\n|      defence|prosecution|\n+-------------+-----------+\nonly showing top 5 rows\n\nimport org.apache.spark.sql.types._\n\u001b[1m\u001b[34mschema\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.types.StructType\u001b[0m = StructType(StructField(ant1,StringType,true), StructField(ant2,StringType,true))\n\u001b[1m\u001b[34mantpairs\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [ant1: string, ant2: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=351",
+              "$$hashKey": "object:1122"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1655993501951_1092077524",
+      "id": "paragraph_1655993501951_1092077524",
+      "dateCreated": "2022-06-23T14:11:41+0000",
+      "dateStarted": "2022-06-26T12:56:11+0000",
+      "dateFinished": "2022-06-26T12:56:11+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:437"
+    },
+    {
+      "text": "%spark\n\nval warc_text = warc_records\n            .map(wr => wr.getHttpStringBody() )\n            .map(wr => Jsoup.parse(wr))\n            .filter(wr => wr.select(\"html\").first().attr(\"lang\") == \"en\")\n            .map(_.body().text())\n            .filter(_.length > 0)\n            \nval warc_words = warc_text\n            .flatMap(_.split(\" \"))\n            .map(_.replaceAll(\n                \"[^a-zA-Z]\", \"\")\n                .toLowerCase\n            )\n            \nval antpairslist1 = antpairs.select(\"ant1\").map(f=>f.getString(0)).collect.toList\nval antpairslist2 = antpairs.select(\"ant2\").map(f=>f.getString(0)).collect.toList\n            \nval wordcounts = warc_words\n            .filter(w => antpairslist1.contains(w) || antpairslist2.contains(w))\n            .map(word => (word, 1))\n            .reduceByKey(_+_)\n            // .sortByKey()\n            \nval wordcountdf = wordcounts.toDF(\"word\", \"count\")\n\nwordcountdf.show(5)\n\n// now maybe join the worcount rdd onto my antpairs dataframe?\nval antpairscounts = antpairs.join(\n                                wordcountdf.withColumnRenamed(\"word1\", \"count1\").alias(\"c1\"), \n                                $\"c1.word\" === antpairs(\"ant1\"), \n                                \"right\"\n                                )\n                          .withColumnRenamed(\"count\", \"count1\")\n                          .join(wordcountdf.withColumnRenamed(\"word2\", \"count2\").alias(\"c2\"), $\"c2.word\" === antpairs(\"ant2\"))\n                          .withColumnRenamed(\"count\", \"count2\")\n                          .select(\"ant1\", \"count1\", \"ant2\", \"count2\")\n\nantpairscounts.show(5)\nprint(warc_words.count())",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-26T12:56:35+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+-----+\n|       word|count|\n+-----------+-----+\n|  practical|    2|\n|    poverty|    1|\n|    eastern|    1|\n|rationalism|    1|\n|       pain|    1|\n+-----------+-----+\nonly showing top 5 rows\n\n+----------+------+--------+------+\n|      ant1|count1|    ant2|count2|\n+----------+------+--------+------+\n|      good|    54|    evil|    33|\n|  goodness|     1|    evil|    33|\n|    simple|     1| complex|     1|\n|immorality|     2|morality|    10|\n|   western|    10| eastern|     1|\n+----------+------+--------+------+\nonly showing top 5 rows\n\n2813\u001b[1m\u001b[34mwarc_text\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[1910] at filter at <console>:182\n\u001b[1m\u001b[34mwarc_words\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[1912] at map at <console>:186\n\u001b[1m\u001b[34mantpairslist1\u001b[0m: \u001b[1m\u001b[32mList[String]\u001b[0m = List(infinitesimal, grandson, angiosperm, illiteracy, defence, deficiency, column, girl, asymmetry, extrovert, men, zenith, skepticism, scepticism, intension, reject, combatant, elevation, loser, vassal, maxima, mantissa, western, answer, output, descendant, cooperation, activity, inaccuracy, citizen, exotoxin, daytime, plaintiff, buying, frog, passive, smile, nationalism, power, local, singlet, elect, dark, root, peacetime, antitype, loss, closing, receptor, ideology, outset, ugliness, heavine...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=352",
+              "$$hashKey": "object:1168"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=353",
+              "$$hashKey": "object:1169"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=354",
+              "$$hashKey": "object:1170"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=356",
+              "$$hashKey": "object:1171"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=357",
+              "$$hashKey": "object:1172"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=358",
+              "$$hashKey": "object:1173"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=359",
+              "$$hashKey": "object:1174"
+            },
+            {
+              "jobUrl": "http://a94c36421402:4040/jobs/job?id=360",
+              "$$hashKey": "object:1175"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1656178292825_320568294",
+      "id": "paragraph_1656178292825_320568294",
+      "dateCreated": "2022-06-25T17:31:32+0000",
+      "dateStarted": "2022-06-26T12:56:35+0000",
+      "dateFinished": "2022-06-26T12:56:37+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:438"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-06-26T13:05:23+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1656248723003_2022717440",
+      "id": "paragraph_1656248723003_2022717440",
+      "dateCreated": "2022-06-26T13:05:23+0000",
+      "status": "READY",
+      "$$hashKey": "object:439"
+    }
+  ],
+  "name": "project_notebook",
+  "id": "2H4DJEEE5",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/project_notebook"
+}
