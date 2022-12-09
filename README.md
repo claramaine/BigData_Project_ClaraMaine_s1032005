@@ -1,6 +1,5 @@
-# Is the internet more “good” or “bad”?
-## Analyzing the frequencies of
-opposites in the CommonCrawl.
+# *Is the internet more “good” or “bad”?*
+## Analyzing the frequencies of opposites in the CommonCrawl.
 
 A big data project which uses SparkSQL to analyze the frequency of opposite words on a WARC file from the CommonCrawl dataset.
 
