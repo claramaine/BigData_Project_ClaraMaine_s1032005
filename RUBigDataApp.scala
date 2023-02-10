@@ -44,7 +44,7 @@ object RUBigDataApp {
 	//sanity check
 	val nHTML = warcs.count()
 	println(nHTML)
-	println(s"HELLO ITS WORKING AND THE OUTPUT IS HERE AHHHHHHHH")
+	println(s"Output:")
 	
 	val warc_records = warcs.map{ wr => wr._2 }
                         .filter{_.isValid()}
